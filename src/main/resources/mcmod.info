@@ -1,0 +1,16 @@
+[
+{
+  "modid": "NilCraft",
+  "name": "Nil Craft",
+  "description": "A mod about nothing.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.tesract.com/nilcraft/",
+  "updateUrl": "",
+  "authorList": ["tesract"],
+  "credits": "The Forge and FML guys, for making MC mods possible",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
