@@ -4,6 +4,8 @@ import net.minecraft.init._;
 import net.minecraftforge.fml.common._;
 import net.minecraftforge.fml.common.Mod._;
 import net.minecraftforge.fml.common.event._;
+import net.minecraftforge.common.config.Configuration;
+//import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = modId,
     name = modName,
@@ -12,13 +14,28 @@ import net.minecraftforge.fml.common.event._;
     modLanguage = modLanguage)
 object NilCraft
 {
-    val MODID = "NilCraft";
-    val VERSION = "0.1";
+    val MODID = modId;  
+  
+//    @PreInit
+    @EventHandler
+    def preInit(event:FMLPreInitializationEvent)
+    {
+        NilCraftConfig.loadForgeConfig(new Configuration(event.getSuggestedConfigurationFile));
+    }
     
     @EventHandler
+//    @Init
     def init(event:FMLInitializationEvent)
     {
-		// some example code
         java.lang.System.out.println("DIRT BLOCK >> "+Blocks.dirt.getUnlocalizedName());
+        
+       // NetworkRegistry.instance().registerConnectionHandler(new EntityJoinListener());
+    }
+    
+    @EventHandler
+//    @PostInit
+    def postInit(event:FMLPostInitializationEvent)
+    {
+      
     }
 }
