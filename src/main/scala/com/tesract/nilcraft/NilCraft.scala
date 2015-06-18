@@ -1,11 +1,12 @@
 package com.tesract.nilcraft;
 
-import net.minecraft.init._;
-import net.minecraftforge.fml.common._;
-import net.minecraftforge.fml.common.Mod._;
-import net.minecraftforge.fml.common.event._;
-import net.minecraftforge.common.config.Configuration;
-//import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.common.config.Configuration
+import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.common.Mod.EventHandler
+import net.minecraftforge.fml.common.event._
+import com.tesract.nilcraft.proxy._
+import net.minecraftforge.fml.common.SidedProxy
 
 @Mod(modid = modId,
     name = modName,
@@ -16,26 +17,22 @@ object NilCraft
 {
     val MODID = modId;  
   
-//    @PreInit
+    @SidedProxy(clientSide="com.tesract.nilcraft.proxy.ClientProxy", serverSide="com.tesract.nilcraft.ServerProxy")
+    var proxy:CommonProxy = null;
+
     @EventHandler
     def preInit(event:FMLPreInitializationEvent)
     {
-        NilCraftConfig.loadForgeConfig(new Configuration(event.getSuggestedConfigurationFile));
+      log.info("preinit:"+proxy)
+
+      MinecraftForge.EVENT_BUS.register(new EntityJoinListener());
+
+      proxy.preInit(event)
     }
     
     @EventHandler
-//    @Init
-    def init(event:FMLInitializationEvent)
-    {
-        java.lang.System.out.println("DIRT BLOCK >> "+Blocks.dirt.getUnlocalizedName());
-        
-       // NetworkRegistry.instance().registerConnectionHandler(new EntityJoinListener());
-    }
+    def init(event:FMLInitializationEvent) = proxy.init(event)
     
     @EventHandler
-//    @PostInit
-    def postInit(event:FMLPostInitializationEvent)
-    {
-      
-    }
+    def postInit(event:FMLPostInitializationEvent) = proxy.postInit(event)
 }

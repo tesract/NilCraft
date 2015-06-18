@@ -1,16 +1,22 @@
-package com.tesract.nilcaft;
+package com.tesract.nilcraft;
 
-import net.minecraft.init._;
-import net.minecraftforge.fml.common._;
-import net.minecraftforge.fml.common.Mod._;
-import net.minecraftforge.fml.common.event._;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity._;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraft.entity.player.EntityPlayer
+import org.apache.logging.log4j.LogManager
+import net.minecraft.client.entity.EntityPlayerSP
+import net.minecraft.entity.player.EntityPlayerMP
+import com.tesract.nilcraft.events.PlayerJoin
 
 class EntityJoinListener
 {
-  @EventHandler
+  @SubscribeEvent
   def onJoin(event:EntityJoinWorldEvent){
-    java.lang.System.out.println("joined >> "+event);
+    
+    if (classOf[EntityPlayer].isAssignableFrom(event.entity.getClass)  && !event.world.isRemote )
+    {
+      log.info("joined >> "+event.entity.getName()+" "+event.world.isRemote)
+      playerTracker ! new PlayerJoin(event.entity.asInstanceOf[EntityPlayer], event.world)
+    }
   }
 }
